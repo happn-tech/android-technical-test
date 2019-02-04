@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a99f6fb9-ddaa-495b-bbf6-8c2944d830af",
+		"_postman_id": "1b540a99-b11f-4c4b-bc75-d0acd8e08b65",
 		"name": "Happn-Android-Technical-Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -83,6 +83,39 @@
 								{
 									"key": "title",
 									"value": "/r/Gifs rules: Please read before submitting or commenting"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get articles by title and author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/articles?title=/r/Gifs rules: Please read before submitting or commenting&author=/u/GifsModerator",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"articles"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "/r/Gifs rules: Please read before submitting or commenting"
+								},
+								{
+									"key": "author",
+									"value": "/u/GifsModerator"
 								}
 							]
 						}
