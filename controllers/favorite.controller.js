@@ -15,14 +15,14 @@ exports.get = function (req, res, next) {
             res.send(articles);
         })
     })
-};
+}
 
 exports.create = function (req, res, next) {
     const favorite = new Favorite(
         {
             guid: req.body.guid
         }
-    );
+    )
 
     favorite.save(function (err) {
         if (err) {
@@ -30,7 +30,7 @@ exports.create = function (req, res, next) {
         }
         res.send(favorite)
     })
-};
+}
 
 exports.delete = function (req, res, next) {
     Favorite.deleteOne({ guid: req.params.guid }, function (err) {
@@ -39,4 +39,4 @@ exports.delete = function (req, res, next) {
         }
         res.send()
     })
-};
+}

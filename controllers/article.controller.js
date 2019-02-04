@@ -7,18 +7,24 @@ exports.get = function (req, res) {
 
     if (!author && !title) {
         Article.find(function (err, articles) {
-            if (err) return next(err);
-            res.send(articles);
+            if (err) return next(err)
+            res.send(articles)
         })
     }
-    else if (author){
+    else if (author && !title) {
         Article.find({ author: author }, function (err, articles) {
             if (err) return next(err)
             res.send(articles)
         })
     }
-    else if (title){
+    else if (title && !author) {
         Article.find({ title: title }, function (err, articles) {
+            if (err) return next(err);
+            res.send(articles);
+        })
+    }
+    else if (author && title) {
+        Article.find({ title: title, author: author }, function (err, articles) {
             if (err) return next(err);
             res.send(articles);
         })
