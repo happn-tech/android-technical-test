@@ -1,39 +1,38 @@
 const Favorite = require('../models/favorite.model');
 const Article = require('../models/article.model');
+const mongoose = require('mongoose')
 
 exports.get = function (req, res, next) {
-    Favorite.find(function (err, favorites) {
-        if (err) return next(err);
-        Article.find({
-            'guid': {
-                $in: [
-                    favorites.map(it => it.guid)
-                ]
-            }
-        }, function (err, articles) {
-            if (err) return next(err);
-            res.send(articles);
+    Favorite.find({})
+        .populate('article')
+        .exec(function (err, favorites) {
+            if (err) return next(err)
+            res.send(favorites)
         })
-    })
 }
 
 exports.create = function (req, res, next) {
     const favorite = new Favorite(
         {
-            guid: req.body.guid
+            article: mongoose.Types.ObjectId(req.body.articleId)
         }
     )
 
-    favorite.save(function (err) {
+    favorite.save(function (err, favorite) {
         if (err) {
             return next(err);
         }
-        res.send(favorite)
+        Favorite.populate(favorite, { path: "article" }, function (err, favorite) {
+            if (err) {
+                return next(err);
+            }
+            res.send(favorite)
+        })
     })
 }
 
 exports.delete = function (req, res, next) {
-    Favorite.deleteOne({ guid: req.params.guid }, function (err) {
+    Favorite.deleteOne({ _id: req.params.id }, function (err) {
         if (err) {
             return next(err);
         }

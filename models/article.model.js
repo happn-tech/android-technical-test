@@ -7,6 +7,8 @@ let ArticleSchema = new Schema({
     link: { type: String, required: true },
     guid: { type: String, required: true, index: { unique: true } },
     author: { type: String, required: true },
+    content: { type: String, required: false },
+    categories: { type: Array, required: false },
     thumbnail: { type: String }
 })
 
