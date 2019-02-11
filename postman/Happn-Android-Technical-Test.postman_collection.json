@@ -187,7 +187,140 @@
 					"response": []
 				},
 				{
+					"name": "Create a favorite without article_id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "articleId",
+									"value": "5c5ab7a3a1abcc5c016df88e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a duplicate favorite",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "articleId",
+									"value": "5c5ab7a3a1abcc5c016df88e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete a favorite",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "83e40f8a-0525-4270-b8e6-6fb130e58767",
+								"exec": [
+									"var host = pm.variables.get(\"host\");",
+									"var port = pm.variables.get(\"port\");",
+									"",
+									"",
+									"pm.sendRequest(`http://${host}:${port}/articles`, function (err, response) {",
+									"    var result = response.json();",
+									"    ",
+									"    if (result[0] && result[0]._id){",
+									"        postman.setEnvironmentVariable(\"article_id\", result[0]._id);",
+									"    }",
+									"",
+									"    console.log(result[0]._id)",
+									"    ",
+									"    ",
+									" const postFavoriteRequest = {",
+									"  url: `http://${host}:${port}/favorites`,",
+									"  method: 'POST',",
+									"  body: {",
+									"      mode: 'urlencoded',",
+									"      urlencoded: {",
+									"        { key: \"article_id\", value: pm.environment.get(\"article_id\") }",
+									"      }",
+									"  }",
+									"};",
+									"",
+									"",
+									"pm.sendRequest(postFavoriteRequest, function (err, response) {",
+									"    var favorite = response.json();",
+									"    console.log(\"favorite\");",
+									"    console.log(favorite);",
+									"    if (favorite && favorite._id){",
+									"        postman.setEnvironmentVariable(\"favorite_id\",favorite._id);",
+									"    }",
+									"});",
+									"    ",
+									"}); ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d3f0fd2-f6be-47d5-a806-2378ee1e1c31",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -196,7 +329,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/favorites/331",
+							"raw": "http://{{host}}:{{port}}/favorites/{{article_id}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -204,7 +337,55 @@
 							"port": "{{port}}",
 							"path": [
 								"favorites",
-								"331"
+								"{{article_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a favorite without id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "83e40f8a-0525-4270-b8e6-6fb130e58767",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d3f0fd2-f6be-47d5-a806-2378ee1e1c31",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites"
 							]
 						}
 					},
