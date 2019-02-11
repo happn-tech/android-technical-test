@@ -39,3 +39,13 @@ exports.delete = function (req, res, next) {
         res.send()
     })
 }
+
+exports.deleteMultiple = function (req, res, next) {
+    Favorite.deleteMany(
+        { _id: { $in: req.body.ids } }, function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.send()
+        })
+}
