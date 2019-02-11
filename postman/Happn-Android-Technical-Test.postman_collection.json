@@ -166,8 +166,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "guid",
-									"value": "t3_alz96y",
+									"key": "articleId",
+									"value": "5c5ab7a3a1abcc5c016df88e",
 									"type": "text"
 								}
 							]
@@ -188,6 +188,30 @@
 				},
 				{
 					"name": "Delete a favorite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites/331",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites",
+								"331"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete multiple favorite",
 					"request": {
 						"method": "DELETE",
 						"header": [],
