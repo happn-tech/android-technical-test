@@ -12,19 +12,19 @@ exports.get = function (req, res) {
         })
     }
     else if (author && !title) {
-        Article.find({ author: author }, function (err, articles) {
+        Article.find({ author: { $regex: '.*' + author + '.*' } }, function (err, articles) {
             if (err) return next(err)
             res.send(articles)
         })
     }
     else if (title && !author) {
-        Article.find({ title: title }, function (err, articles) {
+        Article.find({ title: { $regex: '.*' + title + '.*' } }, function (err, articles) {
             if (err) return next(err);
             res.send(articles);
         })
     }
     else if (author && title) {
-        Article.find({ title: title, author: author }, function (err, articles) {
+        Article.find({ title: { $regex: '.*' + title + '.*' }, author: { $regex: '.*' + author + '.*' } }, function (err, articles) {
             if (err) return next(err);
             res.send(articles);
         })
