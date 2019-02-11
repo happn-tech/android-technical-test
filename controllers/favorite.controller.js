@@ -14,7 +14,7 @@ exports.get = function (req, res, next) {
 exports.create = function (req, res, next) {
     const favorite = new Favorite(
         {
-            article: mongoose.Types.ObjectId(req.body.articleId)
+            article: mongoose.Types.ObjectId(req.body.article_id)
         }
     )
 
