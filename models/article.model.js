@@ -10,7 +10,8 @@ let ArticleSchema = new Schema({
     author: { type: String, required: true },
     content: { type: String, required: false },
     categories: { type: Array, required: false },
-    thumbnail: { type: String }
+    thumbnail: { type: String },
+    favorite_id: { type: Schema.Types.ObjectId, ref: 'Favorite', default: null }
 })
 
 module.exports = mongoose.model('Article', ArticleSchema)

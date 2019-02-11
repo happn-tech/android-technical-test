@@ -1,4 +1,4 @@
-const Article = require('../models/article.model');
+const Article = require('../models/article.model')
 
 exports.get = function (req, res) {
 
@@ -19,14 +19,14 @@ exports.get = function (req, res) {
     }
     else if (title && !author) {
         Article.find({ title: { $regex: new RegExp('.*' + title + '.*', 'i') } }, function (err, articles) {
-            if (err) return next(err);
-            res.send(articles);
+            if (err) return next(err)
+            res.send(articles)
         })
     }
     else if (author && title) {
         Article.find({ title: { $regex: new RegExp('.*' + title + '.*', 'i') }, author: { $regex: new RegExp('.*' + author + '.*', 'i') } }, function (err, articles) {
-            if (err) return next(err);
-            res.send(articles);
+            if (err) return next(err)
+            res.send(articles)
         })
     }
 };
