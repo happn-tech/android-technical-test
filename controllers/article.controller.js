@@ -12,19 +12,19 @@ exports.get = function (req, res) {
         })
     }
     else if (author && !title) {
-        Article.find({ author: { $regex: '.*' + author + '.*' } }, function (err, articles) {
+        Article.find({ author: { $regex: new RegExp('.*' + author + '.*', 'i') } }, function (err, articles) {
             if (err) return next(err)
             res.send(articles)
         })
     }
     else if (title && !author) {
-        Article.find({ title: { $regex: '.*' + title + '.*' } }, function (err, articles) {
+        Article.find({ title: { $regex: new RegExp('.*' + title + '.*', 'i') } }, function (err, articles) {
             if (err) return next(err);
             res.send(articles);
         })
     }
     else if (author && title) {
-        Article.find({ title: { $regex: '.*' + title + '.*' }, author: { $regex: '.*' + author + '.*' } }, function (err, articles) {
+        Article.find({ title: { $regex: new RegExp('.*' + title + '.*', 'i') }, author: { $regex: new RegExp('.*' + author + '.*', 'i') } }, function (err, articles) {
             if (err) return next(err);
             res.send(articles);
         })
