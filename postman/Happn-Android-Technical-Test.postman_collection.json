@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "1b540a99-b11f-4c4b-bc75-d0acd8e08b65",
-		"name": "Happn-Android-Technical-Test",
+		"name": "Happn-Android-Technical-Test copy",
+		"_postman_id": "8a9a6398-2a4d-bc1c-44c8-af51baa31b35",
+		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,6 +11,20 @@
 			"item": [
 				{
 					"name": "Get articles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -33,6 +48,20 @@
 				},
 				{
 					"name": "Get articles by author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -41,7 +70,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?author=/u/GifsModerator",
+							"raw": "http://{{host}}:{{port}}/articles?author=Manon",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -53,7 +82,8 @@
 							"query": [
 								{
 									"key": "author",
-									"value": "/u/GifsModerator"
+									"value": "Manon",
+									"equals": true
 								}
 							]
 						}
@@ -62,6 +92,20 @@
 				},
 				{
 					"name": "Get articles by title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -70,7 +114,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?title=/r/Gifs rules: Please read before submitting or commenting",
+							"raw": "http://{{host}}:{{port}}/articles?title=Netflix",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -82,7 +126,8 @@
 							"query": [
 								{
 									"key": "title",
-									"value": "/r/Gifs rules: Please read before submitting or commenting"
+									"value": "Netflix",
+									"equals": true
 								}
 							]
 						}
@@ -91,6 +136,20 @@
 				},
 				{
 					"name": "Get articles by title and author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -99,7 +158,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?title=/r/Gifs rules: Please read before submitting or commenting&author=/u/GifsModerator",
+							"raw": "http://{{host}}:{{port}}/articles?title=Ne&author=Manon",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -111,11 +170,13 @@
 							"query": [
 								{
 									"key": "title",
-									"value": "/r/Gifs rules: Please read before submitting or commenting"
+									"value": "Ne",
+									"equals": true
 								},
 								{
 									"key": "author",
-									"value": "/u/GifsModerator"
+									"value": "Manon",
+									"equals": true
 								}
 							]
 						}
@@ -129,6 +190,19 @@
 			"item": [
 				{
 					"name": "Get favorites",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -157,9 +231,43 @@
 						"header": [
 							{
 								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "article_id",
+									"type": "text",
+									"value": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a favorite without article_id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
@@ -167,8 +275,8 @@
 							"urlencoded": [
 								{
 									"key": "articleId",
-									"value": "5c5ab7a3a1abcc5c016df88e",
-									"type": "text"
+									"type": "text",
+									"value": "5c5ab7a3a1abcc5c016df88e"
 								}
 							]
 						},
@@ -196,7 +304,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/favorites/331",
+							"raw": "http://{{host}}:{{port}}/favorites/5c61e056c67f7d351adfb77a",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -204,7 +312,44 @@
 							"port": "{{port}}",
 							"path": [
 								"favorites",
-								"331"
+								"5c61e056c67f7d351adfb77a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a favorite without id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites"
 							]
 						}
 					},
@@ -214,13 +359,18 @@
 					"name": "Delete multiple favorite",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\"ids\":[]\n}"
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/favorites/331",
+							"raw": "http://{{host}}:{{port}}/favorites/",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -228,7 +378,50 @@
 							"port": "{{port}}",
 							"path": [
 								"favorites",
-								"331"
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete multiple favorite without ids",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites",
+								""
 							]
 						}
 					},
