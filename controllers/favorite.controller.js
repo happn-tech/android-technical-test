@@ -15,8 +15,8 @@ exports.get = function (req, res, next) {
 exports.create = function (req, res, next) {
     const article_id = req.body.article_id
 
-    if (!article_id){
-        return NetworkUtils.missingParameters(res, ['article_id'])   
+    if (!article_id) {
+        return NetworkUtils.missingParameters(res, ['article_id'])
     }
 
     Article.findOne({ _id: article_id }, function (err, article) {
@@ -30,15 +30,14 @@ exports.create = function (req, res, next) {
             if (result) {
                 return NetworkUtils.sendError(res, 'Favorite for this article already exist with id ' + result.id, 409)
             }
-            const favorite = new Favorite({ article: article_id })
+            const favorite = new Favorite({ article: article })
             favorite.save(function (err, favorite) {
                 Favorite.populate(favorite, { path: "article" }, function (err, favorite) {
                     if (err) { return next(err) }
-                    favorite.article.update({ favorite_id: favorite._id }, function (err, _) {
-                        if (err) {
-                            return next(err)
-                        }
-                        res.send(favorite)
+                    article.update({ favorite_id: favorite._id }, function (err, _) {
+                        if (err) { return next(err) }
+                        favorite.article.favorite_id = favorite._id
+                        res.status(201).send(favorite)
                     })
                 })
             })
