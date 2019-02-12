@@ -1,8 +1,7 @@
 {
 	"info": {
-		"name": "Happn-Android-Technical-Test copy",
-		"_postman_id": "8a9a6398-2a4d-bc1c-44c8-af51baa31b35",
-		"description": "",
+		"_postman_id": "c1d32df1-bb05-4292-b326-66266b0601fe",
+		"name": "Happn-Android-Technical-Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -15,13 +14,24 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "9076e16f-c65e-475a-92ad-7b35b2d71118",
 								"exec": [
-									"pm.test(\"response is ok\", function () {",
+									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "08172c8d-1e86-4fc7-a0c2-9dcb21f46cc1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -52,13 +62,58 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "c280a7fb-a0b6-456e-acbc-02c2821c0ec4",
 								"exec": [
-									"pm.test(\"response is ok\", function () {",
+									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"pm.environment.unset(\"author\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d73970fd-2a0e-4605-a1a9-9aca04fb3834",
+								"exec": [
+									"const host = pm.globals.get('host');",
+									"const port = pm.globals.get('port');",
+									"",
+									"const interval = setTimeout(() => {}, 2147483647);",
+									"",
+									"",
+									"function getArticles() {",
+									"    return new Promise(function (resolve, reject) {",
+									"        pm.sendRequest('http://' + host + ':' + port + '/articles', function (err, response) {",
+									"            const articles = response.json();",
+									"            if (articles.length !== 0) {",
+									"                resolve(articles);",
+									"            } else {",
+									"                reject(new Error('There is no article'))",
+									"            }",
+									"        });",
+									"    })",
+									"}",
+									"",
+									"",
+									"function getFirstArticle(articles) {",
+									"    return new Promise(function (resolve, reject) {",
+									"        resolve(articles[0]);",
+									"    });",
+									"}",
+									"",
+									"",
+									"getArticles()",
+									"    .then((v) => { return getFirstArticle(v); })",
+									"    .then((firstArticle) => {",
+									"        pm.environment.set(\"author\", firstArticle.author);",
+									"    })",
+									"    .then(() => clearTimeout(interval))",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -70,7 +125,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?author=Manon",
+							"raw": "http://{{host}}:{{port}}/articles?author={{author}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -82,8 +137,7 @@
 							"query": [
 								{
 									"key": "author",
-									"value": "Manon",
-									"equals": true
+									"value": "{{author}}"
 								}
 							]
 						}
@@ -96,13 +150,58 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4b6a8d4e-ecd8-42b2-b19d-ca03df167607",
 								"exec": [
-									"pm.test(\"response is ok\", function () {",
+									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"pm.environment.unset(\"title\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6dbfafc8-9ac6-4c6b-a377-430b15fb3367",
+								"exec": [
+									"const host = pm.globals.get('host');",
+									"const port = pm.globals.get('port');",
+									"",
+									"const interval = setTimeout(() => {}, 2147483647);",
+									"",
+									"",
+									"function getArticles() {",
+									"    return new Promise(function (resolve, reject) {",
+									"        pm.sendRequest('http://' + host + ':' + port + '/articles', function (err, response) {",
+									"            const articles = response.json();",
+									"            if (articles.length !== 0) {",
+									"                resolve(articles);",
+									"            } else {",
+									"                reject(new Error('There is no article'))",
+									"            }",
+									"        });",
+									"    })",
+									"}",
+									"",
+									"",
+									"function getFirstArticle(articles) {",
+									"    return new Promise(function (resolve, reject) {",
+									"        resolve(articles[0]);",
+									"    });",
+									"}",
+									"",
+									"",
+									"getArticles()",
+									"    .then((v) => { return getFirstArticle(v); })",
+									"    .then((firstArticle) => {",
+									"        pm.environment.set(\"title\", firstArticle.title);",
+									"    })",
+									"    .then(() => clearTimeout(interval))",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -114,7 +213,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?title=Netflix",
+							"raw": "http://{{host}}:{{port}}/articles?title={{title}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -126,8 +225,7 @@
 							"query": [
 								{
 									"key": "title",
-									"value": "Netflix",
-									"equals": true
+									"value": "{{title}}"
 								}
 							]
 						}
@@ -140,13 +238,58 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "277e8d57-3fb9-4c95-bcd7-aa7819528c98",
 								"exec": [
-									"pm.test(\"response is ok\", function () {",
+									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd86b709-203d-4772-9d2b-faf69de4e903",
+								"exec": [
+									"const host = pm.globals.get('host');",
+									"const port = pm.globals.get('port');",
+									"",
+									"const interval = setTimeout(() => {}, 2147483647);",
+									"",
+									"",
+									"function getArticles() {",
+									"    return new Promise(function (resolve, reject) {",
+									"        pm.sendRequest('http://' + host + ':' + port + '/articles', function (err, response) {",
+									"            const articles = response.json();",
+									"            if (articles.length !== 0) {",
+									"                resolve(articles);",
+									"            } else {",
+									"                reject(new Error('There is no article'))",
+									"            }",
+									"        });",
+									"    })",
+									"}",
+									"",
+									"",
+									"function getFirstArticle(articles) {",
+									"    return new Promise(function (resolve, reject) {",
+									"        resolve(articles[0]);",
+									"    });",
+									"}",
+									"",
+									"",
+									"getArticles()",
+									"    .then((v) => { return getFirstArticle(v); })",
+									"    .then((firstArticle) => {",
+									"        pm.environment.set(\"title\", firstArticle.title);",
+									"        pm.environment.set(\"author\", firstArticle.author);",
+									"    })",
+									"    .then(() => clearTimeout(interval))",
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -158,7 +301,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/articles?title=Ne&author=Manon",
+							"raw": "http://{{host}}:{{port}}/articles?title={{title}}&author={{author}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -170,13 +313,11 @@
 							"query": [
 								{
 									"key": "title",
-									"value": "Ne",
-									"equals": true
+									"value": "{{title}}"
 								},
 								{
 									"key": "author",
-									"value": "Manon",
-									"equals": true
+									"value": "{{author}}"
 								}
 							]
 						}
@@ -194,12 +335,25 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "23b76754-5b23-4a40-a8e1-b10a02f6dbda",
 								"exec": [
+									"",
+									"console.log('start test')",
 									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});"
-								]
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2554650b-b409-480a-a669-0453579b1655",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -226,6 +380,64 @@
 				},
 				{
 					"name": "Create a favorite",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1084f5a5-9362-47cb-b2e3-24dc5861153c",
+								"exec": [
+									"const host = pm.globals.get('host');",
+									"const port = pm.globals.get('port');",
+									"",
+									"const interval = setTimeout(() => {}, 2147483647);",
+									"",
+									"",
+									"function getArticles() {",
+									"    return new Promise(function (resolve, reject) {",
+									"        pm.sendRequest('http://' + host + ':' + port + '/articles', function (err, response) {",
+									"            const articles = response.json();",
+									"            if (articles.length !== 0) {",
+									"                resolve(articles);",
+									"            } else {",
+									"                reject(new Error('There is no article'))",
+									"            }",
+									"        });",
+									"    })",
+									"}",
+									"",
+									"function getFirstArticle(articles) {",
+									"    return new Promise(function (resolve, reject) {",
+									"        resolve(articles[0]);",
+									"    });",
+									"}",
+									"",
+									"getArticles()",
+									"    .then((v) => { return getFirstArticle(v); })",
+									"    .then((firstArticle) => {",
+									"        pm.environment.set(\"article_id\", firstArticle._id);",
+									"    })",
+									"    .then(() => clearTimeout(interval))",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "29191b25-ec32-4781-849e-37f4d675c9f4",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const favorite = pm.response.json();",
+									"pm.environment.set(\"favorite_id\", favorite._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -239,8 +451,8 @@
 							"urlencoded": [
 								{
 									"key": "article_id",
-									"type": "text",
-									"value": ""
+									"value": "{{article_id}}",
+									"type": "text"
 								}
 							]
 						},
@@ -260,6 +472,34 @@
 				},
 				{
 					"name": "Create a favorite without article_id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c7949e16-b140-4132-90fc-7381d587eacb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7f75219-0cd8-4f5a-a9d9-175665e31304",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Should have an error message\", function () {",
+									"    pm.response.to.have.body({\"error\":\"Missing parameters article_id\"});",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -270,41 +510,9 @@
 								"value": "application/x-www-form-urlencoded"
 							}
 						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "articleId",
-									"type": "text",
-									"value": "5c5ab7a3a1abcc5c016df88e"
-								}
-							]
-						},
+						"body": {},
 						"url": {
-							"raw": "http://{{host}}:{{port}}/favorites",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"favorites"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete a favorite",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}:{{port}}/favorites/5c61e056c67f7d351adfb77a",
+							"raw": "http://{{host}}:{{port}}/favorites/",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -312,7 +520,60 @@
 							"port": "{{port}}",
 							"path": [
 								"favorites",
-								"5c61e056c67f7d351adfb77a"
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a favorite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9370ff6a-6e48-432b-be89-2c5199c0945a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset(\"favorite_id\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}:{{port}}/favorites/{{favorite_id}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"favorites",
+								"{{favorite_id}}"
 							]
 						}
 					},
