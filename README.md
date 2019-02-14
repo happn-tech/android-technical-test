@@ -30,15 +30,6 @@ npm install
 npm start
 ```
 ### Test
-
-- For running Postman unit tests, you should install Newmam
-
 ```
-npm install -g newman
-```
-
-- For running test go to Postman folder and run this 
-
-```
-newman  run Happn-Android-Technical-Test.postman_collection.json -e happn-android-technical-test.postman_environment.json
+npm test
 ```
